@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick JSON — Formatter · Validator · JSON↔CSV</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23007acc%22/><text x=%2250%22 y=%2270%22 font-size=%2270%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>QJ</text></svg>">
+</head>
+<body>
+
+  <h1>JSON Tools — Formatter · Validator · JSON↔CSV</h1>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button onclick="prettyPrint()">Pretty Print</button>
+    <button onclick="minify()">Minify</button>
+    <button onclick="validate()">Validate</button>
+    <button onclick="jsonToCsv()">JSON → CSV</button>
+    <button onclick="csvToJson()">CSV → JSON</button>
+    <button onclick="copyOutput()">Copy Output</button>
+    <button onclick="downloadOutput()">Download</button>
+    <button onclick="clearAll()">Clear</button>
+    <select id="delimiter">
+      <option value=",">, (comma)</option>
+      <option value="\t">tab (\\t)</option>
+      <option value=";">; (semicolon)</option>
+      <option value="|">| (pipe)</option>
+    </select>
+    <button id="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+  </div>
+
+  <!-- Input/Output -->
+  <div class="editor">
+    <div>
+      <label>입력</label>
+      <textarea id="input" placeholder='여기에 JSON 또는 CSV를 붙여넣으세요. 예: {"a":1} 또는 "id,name\n1,alice"'></textarea>
+    </div>
+    <div>
+      <label>출력 (결과)</label>
+      <textarea id="output" placeholder="변환/포맷 결과가 여기에 표시됩니다."></textarea>
+    </div>
+  </div>
+
+  <p class="tip">Tip: 결과를 수정하고 싶다면 출력 복사 후 입력에 붙여넣기 하세요.</p>
+
+  <!-- Footer -->
+  <footer id="site-footer">
+    © 2025 Quick JSON by Kyla Park. All rights reserved.
+    <div>모든 JSON/CSV 데이터는 서버에 전송되지 않고, 브라우저 내에서만 처리됩니다.</div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

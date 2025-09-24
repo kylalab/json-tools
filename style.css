@@ -1,0 +1,105 @@
+/* 기본 스타일 */
+body {
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  color: #333;
+  margin: 0;
+  padding: 0 20px 80px; /* footer 공간 확보 */
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+button {
+  background: #f1f1f1;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover {
+  background: #e1e1e1;
+}
+
+.editor {
+  display: flex;
+  gap: 16px;
+}
+.editor div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+textarea {
+  flex: 1;
+  min-height: 200px;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.tip {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin: 12px 0;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px 0;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  background: #f6f6f6;
+  border-top: 1px solid #ddd;
+}
+footer div {
+  margin-top: 6px;
+  color: #0a7a28;
+  font-weight: 500;
+}
+
+/* 다크 모드 */
+body.dark {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+body.dark textarea {
+  background: #2d2d2d;
+  color: #fff;
+  border-color: #555;
+}
+body.dark button {
+  background: #333;
+  color: #eee;
+  border-color: #555;
+}
+body.dark button:hover {
+  background: #444;
+}
+#site-footer.dark-footer {
+  background: #222;
+  color: #aaa;
+  border-top: 1px solid #444;
+}
+#site-footer.dark-footer div {
+  color: #6fcf97; /* 초록 강조 */
+}
