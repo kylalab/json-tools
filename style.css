@@ -113,3 +113,25 @@ section {
 body.dark section {
   color: #ddd; /* 밝은 회색으로 변경 */
 }
+
+/* 다크 모드 전체 텍스트 강제 밝게 (인라인 color 덮어쓰기) */
+body.dark section,
+body.dark section * {
+  color: #e6e6e6 !important;
+}
+
+/* 다크 모드 코드/예시 박스 강제 어둡게 (인라인 background 덮어쓰기) */
+body.dark pre,
+body.dark code {
+  background: #2b2b2b !important;
+  color: #f1f1f1 !important;
+  border: 1px solid #444 !important;
+  border-radius: 6px !important;
+}
+
+/* 제목 대비 조금 더 높이기(선택) */
+body.dark h2,
+body.dark h3 {
+  color: #f0f0f0 !important;
+  font-weight: 700;
+}
