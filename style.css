@@ -129,7 +129,7 @@ body.dark code {
   border-radius: 6px !important;
 }
 
-/* 제목 대비 조금 더 높이기(선택) */
+/* 제목 대비 조금 더 높이기 */
 body.dark h2,
 body.dark h3 {
   color: #f0f0f0 !important;
