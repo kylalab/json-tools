@@ -103,3 +103,13 @@ body.dark button:hover {
 #site-footer.dark-footer div {
   color: #6fcf97; /* 초록 강조 */
 }
+
+/* 라이트 모드 기본 */
+section {
+  color: #333;
+}
+
+/* 다크 모드일 때 */
+body.dark section {
+  color: #ddd; /* 밝은 회색으로 변경 */
+}
