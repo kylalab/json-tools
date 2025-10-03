@@ -135,3 +135,197 @@ body.dark h3 {
   color: #f0f0f0 !important;
   font-weight: 700;
 }
+
+/* 블로그 목록 카드 */
+.post-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 12px 0;
+  background: #fff;
+}
+.post-title { margin: 0 0 6px; font-size: 18px; }
+.post-title a { color: #111; text-decoration: none; }
+.post-title a:hover { text-decoration: underline; }
+.post-meta { margin: 0 0 6px; font-size: 12px; color: #6b7280; }
+.post-excerpt { margin: 0; color: #374151; }
+
+/* 버튼 */
+.btn {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.btn:hover { background: #1d4ed8; }
+
+/* 다크 모드 */
+body.dark .post-card { background: #2a2a2a; border-color: #3a3a3a; }
+body.dark .post-title a { color: #eaeaea; }
+body.dark .post-meta { color: #9aa0a6; }
+body.dark .post-excerpt { color: #d7d7d7; }
+body.dark .btn { background:#3b82f6; }
+body.dark .btn:hover { background:#2563eb; }
+
+.nav-icons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #d1d5db; /* 연한 회색 테두리 */
+  background: transparent;     /* 배경 투명 */
+  color: #111;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  border-color: #2563eb; /* hover 시 파란색 강조 */
+  color: #2563eb;
+  background: #f9fafb;   /* 살짝 연한 배경 */
+}
+
+body.dark .nav-item {
+  border-color: #3a3a3a;
+  color: #eaeaea;
+}
+
+body.dark .nav-item:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+  background: #1f2937;
+}
+
+.post-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: #2563eb;   /* 메인: 파란 버튼 */
+  color: #fff;
+}
+
+.btn-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-icon:hover {
+  background: #1d4ed8;
+}
+
+/* 서브: 투명 + 파란 테두리 */
+.btn-icon.secondary {
+  background: transparent;
+  border: 1px solid #2563eb;
+  color: #2563eb;
+}
+
+.btn-icon.secondary:hover {
+  background: #f0f7ff;
+}
+
+/* (옵션) 다크모드 대응 */
+body.dark .btn-icon.secondary {
+  border-color: #3b82f6;
+  color: #9ec3ff;
+}
+body.dark .btn-icon.secondary:hover {
+  background: #1f2937;
+}
+
+
+/* footer 고정 */
+#site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #f9f9f9;   /* 배경 넣어서 겹침 방지 */
+  border-top: 1px solid #ddd;
+  text-align: center;
+  padding: 12px 8px;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.4;
+  z-index: 1000;         /* 버튼보다 위로 올라오지 않게 조정 가능 */
+}
+
+/* 본문에 footer 공간만큼 여백 추가 */
+body {
+  margin-bottom: 60px;  /* footer 높이만큼 확보 */
+}
+
+.footer {
+  text-align: center;
+  padding: 24px 12px;
+  color: #666;
+}
+
+/* footer 내부 줄간격/여백을 명시적으로 고정 */
+.footer-line {
+  display: block;        /* 한 줄씩 */
+  margin: 0;             /* p 기본 마진 영향 제거 */
+  line-height: 1.4;      /* 상속된 큰 line-height 무시 */
+}
+
+.footer-line.notice {
+  color: #2563eb;        /* 강조 파란색 */
+  margin-top: 4px;       /* 두 줄 사이 간격만 살짝 */
+}
+
+/* 혹시 해당 페이지에서 p로 감싸져 있다면 안전장치 */
+#site-footer p { margin: 0; line-height: 1.4; }
+
+.post-card {
+  padding: 14px 16px;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  margin: 10px 0;
+  background: #fff;
+}
+.post-card:hover { border-color:#d9e2ff; box-shadow:0 1px 0 rgba(37,99,235,.08); }
+.post-title { margin:0 0 6px; font-size:18px; }
+.post-title a { color:#111; text-decoration:none; }
+.post-title a:hover { text-decoration:underline; }
+.post-meta { color:#777; font-size:13px; margin:0 0 8px; }
+.post-excerpt { margin:0; color:#444; }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .6rem 1rem;
+  border-radius: .5rem;
+  border: 1px solid #2563eb; /* 파란 테두리 */
+  background: transparent;   /* 투명 배경 */
+  color: #2563eb;            /* 파란 글씨 */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.btn-outline:hover {
+  background: #2563eb10; /* 살짝 파란 배경 (투명도) */
+}
