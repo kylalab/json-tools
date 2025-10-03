@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>중첩 JSON 평탄화(Flatten) 전략 - Quick JSON</title>
+  <meta name="description" content="중첩 JSON을 CSV나 테이블로 변환할 때 필요한 평탄화 규칙과 전략. 키 네이밍, 배열 처리, 충돌 방지, 실무 예시를 정리했습니다.">
+  <link rel="canonical" href="https://quick-json-tools.netlify.app/posts/json-flatten-guide.html">
+  <link rel="stylesheet" href="../style.css?v=p4">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23007acc%22/><text x=%2250%22 y=%2270%22 font-size=%2270%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>QJ</text></svg>">
+</head>
+<body>
+  <header style="max-width:880px;margin:24px auto 12px;padding:0 16px">
+    <h1>중첩 JSON 평탄화(Flatten) 전략</h1>
+    <p class="post-meta">2025-10-03 · 작성자 Kyla</p>
+  </header>
+
+  <main style="max-width:880px;margin:0 auto;padding:0 16px;line-height:1.8">
+    <p>
+      JSON은 <strong>중첩 구조</strong>가 자유롭지만, 분석팀이나 시트/데이터베이스에서는 이를
+      <em>표(테이블)</em> 형태로 다뤄야 합니다. 이때 필요한 것이 <strong>JSON 평탄화(Flatten)</strong> 전략입니다.
+    </p>
+
+    <h2>평탄화 기본 규칙</h2>
+    <ul>
+      <li><strong>경로 키 생성</strong>: 중첩 객체는 `.` 또는 `_` 로 이어붙임 (<code>a.b.c</code>)</li>
+      <li><strong>배열 처리</strong>: 인덱스 번호로 구분 (<code>items[0].price</code>)</li>
+      <li><strong>null/빈 배열</strong>: 일관되게 공백 혹은 `null` 문자열 처리</li>
+    </ul>
+
+    <h2>실제 예시</h2>
+    <h3>원본 JSON</h3>
+    <pre class="example-block">{
+  "id": 1,
+  "user": {
+    "name": "Alice",
+    "contacts": [
+      {"type": "email", "value": "alice@test.com"},
+      {"type": "phone", "value": "010-1234-5678"}
+    ]
+  }
+}</pre>
+
+    <h3>평탄화된 결과</h3>
+    <pre class="example-block">id,user.name,user.contacts[0].type,user.contacts[0].value,user.contacts[1].type,user.contacts[1].value
+1,Alice,email,alice@test.com,phone,010-1234-5678</pre>
+
+    <h2>충돌 방지</h2>
+    <ul>
+      <li><strong>점 포함 키</strong>: 원래 키에 점이 있으면 따옴표 처리 또는 다른 구분자 사용</li>
+      <li><strong>배열 vs 객체 혼합</strong>: 동일 경로에 배열과 객체가 섞이지 않도록 설계</li>
+      <li><strong>유니코드/특수문자</strong>: 키 이름 표준화(소문자, `_` 권장)</li>
+    </ul>
+
+    <h2>실무 팁</h2>
+    <ul>
+      <li>분석팀: <em>열 이름</em>을 문서화해두고, 변환 로직을 공유</li>
+      <li>개발팀: <em>API 응답 스키마</em>에 배열 처리 규칙을 명시</li>
+      <li>QA팀: 표본 데이터를 CSV로 내려서 엑셀/시트에서 검증</li>
+    </ul>
+
+    <p>
+      Quick JSON의 <a href="../tools.html">도구</a>를 이용하면
+      브라우저 내에서 안전하게 JSON을 CSV로 변환하고, 위와 같은 평탄화 결과를 바로 확인할 수 있습니다.
+    </p>
+
+   <div class="post-actions">
+  <!-- 메인: 파란 버튼 -->
+  <a href="../tools.html" class="btn-icon" aria-label="도구로 이동">
+    <!-- 얇은 톱니(Outline) 아이콘 -->
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+         stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.03c1.57-.906 3.356.88 2.45 2.45a1.724 1.724 0 0 0 1.03 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0-1.03 2.573c.906 1.57-.88 3.356-2.45 2.45a1.724 1.724 0 0 0-2.573 1.03c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0-2.573-1.03c-1.57.906-3.356-.88-2.45-2.45a1.724 1.724 0 0 0-1.03-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.03-2.573c-.906-1.57.88-3.356 2.45-2.45.94.543 2.14.22 2.573-1.03z"/>
+      <circle cx="12" cy="12" r="3.25"/>
+    </svg>
+    도구로 이동
+  </a>
+
+  <!-- 서브: 투명 + 파란 테두리 -->
+  <a href="../index.html" class="btn-icon secondary" aria-label="블로그 홈으로">
+    <!-- 얇은 홈(Outline) 아이콘 -->
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+         stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 10.5 12 3l9 7.5"/>
+      <path d="M5 10v9a2 2 0 0 0 2 2h4v-6h2v6h4a2 2 0 0 0 2-2v-9"/>
+    </svg>
+    블로그 홈
+  </a>
+</div>
+  </main>
+
+  <footer id="site-footer" class="footer">
+    <small class="footer-line">© 2025 Quick JSON by Kyla Park. All rights reserved.</small>
+    <small class="footer-line notice">모든 JSON/CSV 데이터는 서버에 전송되지 않고, 브라우저 내에서만 처리됩니다.</small>
+  </footer>
+</body>
+</html>

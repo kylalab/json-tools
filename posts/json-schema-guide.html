@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSON 스키마 & 유효성 검사 완전 가이드 - Quick JSON</title>
+  <meta name="description" content="JSON Schema를 활용한 데이터 유효성 검사 가이드. draft-07 키워드, 회원가입/결제 예시, 브라우저 검증 방법, Quick JSON의 Validate 기능과의 차이까지 정리했습니다.">
+  <link rel="canonical" href="https://quick-json-tools.netlify.app/posts/json-schema-guide.html">
+  <link rel="stylesheet" href="../style.css?v=p3">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23007acc%22/><text x=%2250%22 y=%2270%22 font-size=%2270%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22>QJ</text></svg>">
+</head>
+<body>
+</head>
+<body>
+  <header style="max-width:880px;margin:24px auto 12px;padding:0 16px">
+    <h1>JSON 스키마 & 유효성 검사 완전 가이드</h1>
+    <p class="post-meta">2025-10-01 · 작성자 Kyla</p>
+  </header>
+
+  <main style="max-width:880px;margin:0 auto;padding:0 16px;line-height:1.8">
+    <p>
+      JSON은 단순하지만, 데이터가 커지고 팀 간 교환이 많아질수록 <strong>형식 보장</strong>이 필요합니다.
+      이때 쓰이는 것이 바로 <strong>JSON Schema</strong>입니다.
+      이번 글에서는 스키마의 필요성, draft-07 주요 키워드, 실무 예시, 브라우저 검증 방법,
+      그리고 Quick JSON의 Validate 기능과의 역할 분담을 다룹니다.
+    </p>
+
+    <h2>왜 JSON 스키마가 필요한가?</h2>
+    <ul>
+      <li><strong>프론트엔드</strong> — 서버에 보내기 전 입력값 검증</li>
+      <li><strong>백엔드</strong> — API 요청/응답이 계약(contract)에 맞는지 보장</li>
+      <li><strong>데이터팀</strong> — 로그/이벤트 스키마를 문서화하고 품질 관리</li>
+    </ul>
+    <p>스키마 없이는 팀마다 데이터 해석이 달라지고, 디버깅 비용이 커집니다.</p>
+
+    <h2>JSON Schema (draft-07) 주요 키워드</h2>
+    <pre class="example-block">{
+  "type": "object",
+  "properties": {
+    "id": { "type": "integer" },
+    "name": { "type": "string" },
+    "email": { "type": "string", "pattern": "^[^@]+@[^@]+$" },
+    "role": { "enum": ["user", "admin"] }
+  },
+  "required": ["id", "name", "email"]
+}</pre>
+    <ul>
+      <li><code>type</code> — 데이터 유형 지정</li>
+      <li><code>properties</code> — 객체 필드 정의</li>
+      <li><code>required</code> — 반드시 포함해야 하는 필드</li>
+      <li><code>enum</code> — 허용 가능한 값 집합</li>
+      <li><code>pattern</code> — 정규식 패턴 매칭</li>
+    </ul>
+
+    <h2>실무 예시</h2>
+    <h3>회원가입 요청</h3>
+    <pre class="example-block">{
+  "type": "object",
+  "properties": {
+    "username": { "type": "string", "minLength": 3 },
+    "password": { "type": "string", "minLength": 8 },
+    "age": { "type": "integer", "minimum": 13 }
+  },
+  "required": ["username", "password"]
+}</pre>
+
+    <h3>결제 요청</h3>
+    <pre class="example-block">{
+  "type": "object",
+  "properties": {
+    "orderId": { "type": "string" },
+    "amount": { "type": "number", "minimum": 0 },
+    "currency": { "enum": ["USD", "KRW", "JPY"] }
+  },
+  "required": ["orderId", "amount", "currency"]
+}</pre>
+
+    <h2>브라우저에서 가벼운 검증</h2>
+    <ul>
+      <li><strong>라이브러리 없이</strong> — 간단한 경우 정규식/타입 체크만으로도 충분</li>
+      <li><strong>라이브러리 활용</strong> — <code>ajv</code> 같은 검증기 사용 시 draft-07까지 폭넓게 지원</li>
+    </ul>
+    <p>작은 프로젝트 → 가벼운 자체 검사.  
+    큰 프로젝트 → 스키마 기반 자동 검증 추천.</p>
+
+    <h2>Quick JSON의 Validate와의 차이</h2>
+    <ul>
+      <li><strong>Quick JSON</strong> — JSON 문법 오류 위치를 빠르게 찾는 용도</li>
+      <li><strong>JSON Schema</strong> — 문법이 맞더라도 “의도된 구조”를 따르는지 검증</li>
+    </ul>
+    <p>따라서 두 기능은 경쟁이 아니라 <em>보완 관계</em>입니다.</p>
+
+    <h2>체크리스트</h2>
+    <ul>
+      <li>반드시 필요한 필드는 <code>required</code>에 추가했는가?</li>
+      <li>숫자 범위, 문자열 길이 제한을 정의했는가?</li>
+      <li>이메일/전화번호 등은 <code>pattern</code>으로 검증했는가?</li>
+      <li><code>enum</code> 값 목록은 최신 상태인가?</li>
+    </ul>
+
+   <div class="post-actions">
+  <!-- 메인: 파란 버튼 -->
+  <a href="../tools.html" class="btn-icon" aria-label="도구로 이동">
+    <!-- 얇은 톱니(Outline) 아이콘 -->
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+         stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.03c1.57-.906 3.356.88 2.45 2.45a1.724 1.724 0 0 0 1.03 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0-1.03 2.573c.906 1.57-.88 3.356-2.45 2.45a1.724 1.724 0 0 0-2.573 1.03c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0-2.573-1.03c-1.57.906-3.356-.88-2.45-2.45a1.724 1.724 0 0 0-1.03-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.03-2.573c-.906-1.57.88-3.356 2.45-2.45.94.543 2.14.22 2.573-1.03z"/>
+      <circle cx="12" cy="12" r="3.25"/>
+    </svg>
+    도구로 이동
+  </a>
+
+  <!-- 서브: 투명 + 파란 테두리 -->
+  <a href="../index.html" class="btn-icon secondary" aria-label="블로그 홈으로">
+    <!-- 얇은 홈(Outline) 아이콘 -->
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+         stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 10.5 12 3l9 7.5"/>
+      <path d="M5 10v9a2 2 0 0 0 2 2h4v-6h2v6h4a2 2 0 0 0 2-2v-9"/>
+    </svg>
+    블로그 홈
+  </a>
+</div>
+  </main>
+
+  <footer id="site-footer" class="footer">
+    <small class="footer-line">© 2025 Quick JSON by Kyla Park. All rights reserved.</small>
+    <small class="footer-line notice">모든 JSON/CSV 데이터는 서버에 전송되지 않고, 브라우저 내에서만 처리됩니다.</small>
+  </footer>
+</body>
+</html>
